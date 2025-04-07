@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Broken CSS</title>
+        <style>
+            header {
+                border-bottom: 1px solid black;
+            }
+
+            .tasty {
+                color: white;
+                background: linear-gradient(0.25turn, #3f87a6, #f69d3c);
+            }
+            .icky {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>My food review site</h1>
+            <p>Here are some of my favorite and least favorite foods!</p>
+            <p>I categorize them by vegetables and fruits.</p>
+        </header>
+        <section>
+            <h2>Vegetables</h2>
+            <p>Here are some vegetables. <b class="icky">Vegetables are icky!</b></p>
+            <ul>
+                <li>Artichoke</li>
+                <li>Broccoli</li>
+                <li>Cucumber</li>
+                <li>Daikon radish</li>
+            </ul>
+        </section>
+        <section>
+            <h2 class="tasty">Fruits (should have fancy BG)</h2>
+            <p>Here are some fruits. <b class="tasty">I love fruits!</b></p>
+            <ul>
+                <li>Apples</li>
+                <li>Bananas</li>
+                <li>Cherries</li>
+                <li>Durian</li>
+            </ul>
+        </section>
+    </body>
+</html>
