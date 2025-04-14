@@ -1,0 +1,15 @@
+body {
+    background-color: #EDD8FB;
+    color: #9e51cd; 
+    font-family: "JetBrains Mono", monospace;
+}
+
+header h1{
+    color: #781db0;
+    background-color: #c6b4f4;
+}
+
+h1, h2, h3 {
+    color: #813eaa;
+    background-color: #E1D7FA;
+}
