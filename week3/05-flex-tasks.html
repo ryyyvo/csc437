@@ -36,18 +36,40 @@
     <style>
         /* You can write your Challenge 1 styles here.  Technically, <style> must be inside <head> to be valid HTML but
         for just this class exercise I'm putting it here because it works. */
-        .challenge-1-container {
+        .challenge-1-container{
             padding: 1em;
             background-color: darkslateblue;
+            display: flex;
+            flex: 1;
+        }
+        
+        .challenge-1-left {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            gap: 1rem
         }
         .challenge-1-container a {
             color: white;
         }
+        .challenge-1-right {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            flex-grow: 1;
+        }
+
     </style>
     <nav class="challenge-1-container">
-        <a href="#"><img src="https://placehold.co/100x50?text=Website+Logo" alt="Go to homepage" /></a>
-        <a href="#">Subpage link</a>
-        <a href="#">Subpage link</a>
+        <div class="challenge-1-left">
+            <a href="#"><img src="https://placehold.co/100x50?text=Website+Logo" alt="Go to homepage" /></a>
+            <a href="#">Subpage link</a>
+            <a href="#">Subpage link</a>
+        </div>
+        <div class="challenge-1-right">
+            <button class="large-action-button">Join now!</button>
+        </div>
+        
     </nav>
 
     <h2>Challenge 2b</h2>
@@ -60,6 +82,10 @@
             min-height: 100vh;
             background-color: darkslateblue;
             color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
         }
         .challenge-3-container p {
             font-size: xxx-large;
@@ -80,6 +106,12 @@
             max-width: 40em;
             padding: 1em;
             border: 2px solid firebrick;
+            display: flex;
+            gap: 1em;
+        }
+        .challenge-4-container > input {
+            display: flex;
+            flex-grow: 1;
         }
     </style>
     <div class="challenge-4-container">
@@ -95,6 +127,9 @@
             max-width: 50em;
             padding: 1em;
             border: 2px solid firebrick;
+            display: grid;
+            grid-template-columns: auto 2fr auto;
+            gap: 1em
         }
     </style>
     <div class="challenge-5-container">
@@ -103,7 +138,7 @@
             <h3>Juniper Hollow Hotel</h3>
             <p>The Juniper Hollow Hotel blends modern comfort with rustic charm. Each room features locally crafted furnishings, plush bedding, and floor-to-ceiling windows offering stunning views of the Blue Ridge Mountains. Complimentary breakfast at the café included.</p>
         </div>
-        <div>
+        <div style="flex-shrink: 0;">
             <strong>$132/night</strong>
             <p>Only 3 left!</p>
             <button class="small-action-button">Book now</button>
