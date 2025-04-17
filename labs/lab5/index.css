@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #23222b;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    color: skyblue;
+}
+
+.weblink {
+    background-color: #3c3a49;
+    padding: 0.55em;
+    border-radius: 0.5em;
+}
+
+li {
+    width: 5em; /* So the images don't take up the entire page. */
+}
+
+/* Write your own CSS below.  Don't modify anything above this comment. */
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.weather {
+    padding: 2em;
+}
+
+.weather a {
+    display: flex;
+    justify-content: end;
+    gap: 0.5em;
+}
+
+.weather a img {
+    width: 2.25em;
+    height: 2.25em;
+}
+
+.firefox_heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.searchbox {
+    display: flex;
+    justify-content: center;
+    gap: 0.5em;
+    padding: 1.5em 0em 3em;
+    
+}
+
+.searchbox input {
+    padding: 1em;
+    border-radius: 0.5em;
+    border: none;
+    background-color: #3c3a49;
+    color: white;
+    width: 40em;
+    max-width: 40em;
+    
+}
+
+.links {
+    min-height: 25vh;
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+}
+
+.links li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style-type: none;
+    gap: 0.5em;
+    flex-shrink: 0; 
+    flex-grow: 0; 
+    flex-basis: auto; 
+}
+
+.links p {
+    width: 100%;
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

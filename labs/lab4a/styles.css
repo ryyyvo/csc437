@@ -11,6 +11,7 @@ body {
     background-color: #777;
     background-blend-mode: multiply;
     color: white;
+    display: flex;
 }
 
 header {
