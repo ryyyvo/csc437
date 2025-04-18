@@ -99,6 +99,7 @@ body {
 }
 
 .links p {
+    text-align: center;
     width: 100%;
     text-wrap: nowrap;
     overflow: hidden;
