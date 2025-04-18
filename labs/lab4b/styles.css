@@ -1,19 +1,21 @@
+@import url('tokens.css');
+
 * { 
     margin: 0; 
     padding: 0
 }
 
 body {
-    background-color: #EDD8FB;
-    color: #9e51cd; 
+    background-color: var(--color-body-bg);
+    color: var(--color-body-text); 
     font-family: "JetBrains Mono", monospace;
 }
 
 header {
     display: flex;
     align-items: center;
-    color: #781db0;
-    background-color: #c6b4f4;
+    color: var(--color-header-text);
+    background-color: var(--color-header-bg);
     padding: 1em 0 1em 1.5em;
     gap: 2em;
 }
@@ -35,6 +37,6 @@ main {
 }
 
 main h1, h2, h3 {
-    color: #813eaa;
-    background-color: #E1D7FA;
+    color: var(--color-main-text);
+    background-color: var(--color-main-bg);
 }
