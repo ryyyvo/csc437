@@ -8,6 +8,7 @@
 body {
     background-color: #23222b;
     color: white;
+    padding: 1.5em;
 }
 
 h1 {
@@ -26,3 +27,16 @@ h1,h2 {
 }
 
 /* Write your own CSS below.  Don't modify anything above this comment. */
+
+body { 
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-rows: 2fr 1fr 2fr;
+}
+
+#conf-description {
+    grid-column: 1;
+    grid-row: 1;
+    max-width: 15em;
+    text-align: end;
+}
