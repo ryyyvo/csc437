@@ -1,15 +1,40 @@
+* { 
+    margin: 0; 
+    padding: 0
+}
+
 body {
     background-color: #EDD8FB;
     color: #9e51cd; 
     font-family: "JetBrains Mono", monospace;
 }
 
-header h1{
+header {
+    display: flex;
+    align-items: center;
     color: #781db0;
     background-color: #c6b4f4;
+    padding: 1em 0 1em 1.5em;
+    gap: 2em;
 }
 
-h1, h2, h3 {
+header ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    gap: 2em;
+}
+
+header li{
+    list-style-type: none;
+}
+
+main {
+    padding: 2em;
+}
+
+main h1, h2, h3 {
     color: #813eaa;
     background-color: #E1D7FA;
 }
