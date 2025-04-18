@@ -1,0 +1,28 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-size: 1.25rem;
+    font-family: Domine, serif;
+}
+
+body {
+    background-color: #23222b;
+    color: white;
+}
+
+h1 {
+    font-size: 2em;
+}
+h2 {
+    font-size: 1.5em;
+}
+h1,h2 {
+    font-family: "Playwrite AU SA", serif;
+}
+
+#conf-description {
+    color: #ddd;
+    font-size: 1rem;
+}
+
+/* Write your own CSS below.  Don't modify anything above this comment. */
