@@ -164,6 +164,48 @@
         <button class="large-action-button">Join now!</button>
     </nav>
     <div style="text-align: center; margin-top: 1em;">Here is some centered content under the navbar.</div>
+    <h2>Challenge 7</h2>
+    <style>
+        /* You can write your Challenge 7 styles here. */
+        .challenge-7-container {
+            max-width: 30em;
+            padding: 1em;
+            border: 2px solid firebrick;
+        }
+        .challenge-7-container img {
+            max-width: 100%;
+        }
 
+        .challenge-7-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        /* .product-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1em;
+            padding: 0.5em;
+        } */
+
+        /* or grid */
+
+        .product-info {
+            display: grid;
+            align-content: center;
+            gap: 1em;
+            padding: 0.5em;
+        }
+
+    </style>
+    <div class="challenge-7-container">
+        <img src="https://placehold.co/300x350?text=Product+Image" alt="Product image" />
+        <div class="product-info">
+            <h3>You Rock</h3>
+            <p>An inspirational piece to help you be the best you, and inspire those around you</p>
+            <button class="small-action-button">Buy now</button>
+        </div>
+    </div>
 </body>
 </html>
