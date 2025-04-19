@@ -30,13 +30,51 @@ h1,h2 {
 
 body { 
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    grid-template-rows: 2fr 1fr 2fr;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: repeat(5, auto);
+    grid-template-areas:
+        "conf-description image"
+        "title title"
+        "subtitle subtitle"
+        "date date"
+        "location location"
+        "activities speakers";
+    column-gap: 1.5em;
+    }
+
+ul {
+    list-style-type: none;
+}
+    
+#conf-description {
+    max-width: 15em;
+    text-align: right;
+    grid-area: conf-description;
+    align-self: center;
 }
 
-#conf-description {
-    grid-column: 1;
-    grid-row: 1;
-    max-width: 15em;
-    text-align: end;
+.activities {
+    grid-area: activities;
+    text-align: right;
+}
+
+.activities * {
+    margin: 0.4em 0;
+} 
+
+.speakers {
+    grid-area: speakers;
+    text-align: left;
+}
+
+.speakers * {
+    margin: 0.4em 0;
+}
+
+img {
+    grid-area: image;
+    min-width: 6em;
+    /* height: auto; */
+    /* object-fit: cover;
+    display: block; */
 }
