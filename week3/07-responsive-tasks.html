@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Responsive Exercises</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        @media (min-width: 600px) {
+            .challenge-1-container {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Challenge 1</h1>
+    <style>
+        .challenge-1-container > * {
+            border: 2px solid firebrick;
+            padding: 1em;
+        }
+    </style>
+    <div class="challenge-1-container">
+        <main>
+            <h2>Main content</h2>
+            <p>Here is some main content.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </main>
+        <aside>
+            <h3>Secondary content</h3>
+            <p>Here is some secondary content. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </aside>
+    </div>
+
+
+    <h1>Challenge 2</h1>
+    <style>
+        .challenge-2-container > * {
+            border: 2px solid firebrick;
+            padding: 1em;
+        }
+
+        .challenge-2-container > nav {
+            display: none;
+        }
+
+        @media (min-width: 600px) {
+            .challenge-2-container > nav {
+                display: flex;
+                flex-direction: column;
+            }
+            .challenge-2-container {
+                display: flex;
+            }
+        }
+
+    </style>
+    <div class="challenge-2-container">
+        <nav>
+            <strong>Navigation</strong>
+            <a href="#">Lorem</a>
+            <a href="#">Ipsum</a>
+            <a href="#">Dolor</a>
+            <a href="#">Sit</a>
+        </nav>
+        <main>
+            <h2>Main content</h2>
+            <p>Here is some main content.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </main>
+    </div>
+</body>
+</html>
