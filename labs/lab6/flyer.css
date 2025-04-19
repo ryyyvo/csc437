@@ -30,27 +30,58 @@ h1,h2 {
 
 body { 
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: repeat(5, auto);
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: auto auto auto auto auto auto 1fr;
     grid-template-areas:
         "conf-description image"
-        "title title"
-        "subtitle subtitle"
-        "date date"
-        "location location"
+        "title image"
+        "subtitle image"
+        "line image"
+        "date image"
+        "location image"
         "activities speakers";
     column-gap: 1.5em;
-    }
+}
 
 ul {
     list-style-type: none;
 }
-    
+
+hr {
+    grid-area: line;
+    border: 0;
+    border-top: 0.1em solid #ddd;
+    margin: 0.5em 0;
+}
+
 #conf-description {
-    max-width: 15em;
-    text-align: right;
     grid-area: conf-description;
-    align-self: center;
+    max-width: 20em;
+    text-align: right;
+    justify-self: end;
+    margin-bottom: 5em;
+    line-height: 1.5em;
+}
+
+#title {
+    grid-area: title;
+    text-align: right;
+}
+
+#subtitle {
+    grid-area: subtitle;
+    text-align: right;
+}
+
+#date {
+    grid-area: date;
+    text-align: right;
+}
+
+#location {
+    grid-area: location;
+    text-align: right;
+    margin-top: 0.25em;
 }
 
 .activities {
@@ -71,10 +102,8 @@ ul {
     margin: 0.4em 0;
 }
 
+
 img {
     grid-area: image;
-    min-width: 6em;
-    /* height: auto; */
-    /* object-fit: cover;
-    display: block; */
+    align-self: stretch;
 }
