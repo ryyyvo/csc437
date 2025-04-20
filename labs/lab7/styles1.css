@@ -65,3 +65,58 @@ main {
     padding: 0.5em 1em;
     color: #fff;
 }
+
+
+/* my changes */
+
+@media (min-width: 600px) {
+
+    header {
+        display: flex;
+        white-space: nowrap;
+    }
+
+    header ul {
+        display: flex;
+        gap: 0.5em;
+    }
+
+    header nav {
+        display: flex;
+        align-items: center;
+    }
+
+    header a {
+        border-top: none;
+    }
+
+    main {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        column-gap: 2em;
+        grid-template-areas: 
+            "article sidebar"
+            "cards sidebar";
+        margin-top: 2em;
+        min-height: 100vh;
+    }
+
+    main > article {
+        grid-area: article;
+    }
+
+    .cards {
+        grid-area: cards;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .cards li {
+        margin: 0.5em;
+    }
+
+    .sidebar {
+        grid-area: sidebar;
+    }
+
+}
