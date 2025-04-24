@@ -1,0 +1,64 @@
+@import url('tokens.css');
+
+* { 
+    margin: 0; 
+    padding: 0
+}
+
+body {
+    background-color: var(--color-body-bg);
+    color: var(--color-body-text); 
+    font-family: "JetBrains Mono", monospace;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    color: var(--color-header-text);
+    background-color: var(--color-header-bg);
+    padding: 1em 0 1em 1.5em;
+    gap: 2em;
+}
+
+header ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    gap: 2em;
+}
+
+header li{
+    list-style-type: none;
+}
+
+main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 2em;
+}
+
+main h1, h2, h3 {
+    color: var(--color-main-text);
+    background-color: var(--color-main-bg);
+}
+
+.contact_info {
+    display: grid;
+    grid-column: 2;
+    gap: 1em;
+}
+
+.contact_info dl {
+    display: grid;
+    grid-template-columns: 5em 2fr;
+    gap: 0.5em;
+}
+
+.hobbies li {
+    padding: 0.3em;
+}
+
+.hobbies ul {
+    margin-top: 0.5em;
+}
