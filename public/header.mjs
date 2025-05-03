@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
   darkModeToggle.addEventListener('change', function() {
     console.log('Dark mode toggled:', this.checked);
     document.body.classList.toggle('dark-mode', this.checked);
+
+    localStorage.setItem('darkMode', this.checked);
   });
 
   let menuExpanded = !mediaQuery.matches;
@@ -44,5 +46,12 @@ document.addEventListener('DOMContentLoaded', function() {
   handleScreenChange(mediaQuery);
   
   mediaQuery.addEventListener('change', handleScreenChange);
+
+  const darkMode = localStorage.getItem('darkMode');
+  if (darkMode === 'true') {
+    document.body.classList.toggle('dark-mode', darkMode);
+    darkModeToggle.checked = true;
+  }
+  
 });
 
