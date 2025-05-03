@@ -6,3 +6,12 @@
     --color-main-bg: #E1D7FA;
     --color-main-text: #813eaa;
 }
+
+body.dark-mode {
+    --color-header-bg: #4b2c6f;
+    --color-header-text: #EDD8FB;
+    --color-body-bg: #1a0d2b;
+    --color-body-text: #EDD8FB;
+    --color-main-bg: #4b2c6f;
+    --color-main-text: #EDD8FB;
+}

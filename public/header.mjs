@@ -4,6 +4,13 @@ document.addEventListener('DOMContentLoaded', function() {
   const headerElement = document.querySelector('header');
   const mediaQuery = window.matchMedia('(max-width: 768px)');
     
+  const darkModeToggle = document.querySelector('.dark-mode-toggle');
+
+  darkModeToggle.addEventListener('change', function() {
+    console.log('Dark mode toggled:', this.checked);
+    document.body.classList.toggle('dark-mode', this.checked);
+  });
+
   let menuExpanded = !mediaQuery.matches;
   navElement.style.display = menuExpanded ? 'block' : 'none';
   
@@ -38,3 +45,4 @@ document.addEventListener('DOMContentLoaded', function() {
   
   mediaQuery.addEventListener('change', handleScreenChange);
 });
+
