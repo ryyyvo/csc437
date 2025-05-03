@@ -72,6 +72,12 @@ a {
     display: none;
 }
 
+.dark-mode-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
 @media (max-width: 768px) {
     
     header {
@@ -89,23 +95,29 @@ a {
         margin-right: 0;
     }
 
-    .menu-button {
-        display: inline-block;
+    .header-controls {
         grid-row: 1;
         grid-column: 2;
-        justify-self: end; 
+        display: flex;
+        align-items: center;
+        justify-self: end;
+        gap: 1em;
+        margin-right: 2.5em;
+    }
+
+    .menu-button {
+        display: inline-block;
         background-color: var(--color-header-bg);
         color: var(--color-header-text);
         padding: 0.5em 1em;
         border-radius: 0.5em;
         border-color: var(--color-header-text);
         cursor: pointer;
-        margin-right: 2.5em;
     }
 
     header nav {
         grid-row: 2;
-        grid-column: 1;
+        grid-column: 1 / span 2;
         width: 100%;
     }
 
