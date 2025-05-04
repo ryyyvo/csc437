@@ -63,6 +63,13 @@ function renderProductCard(product) {
     const buyButton = document.createElement('button');
     buyButton.className = 'buy-button';
     buyButton.textContent = 'Add to cart';
+
+    buyButton.addEventListener('click', () => {
+        product.numInCart++;
+        rerenderAllProducts();
+        rerenderCart();
+    });
+
     buttonContainer.appendChild(buyButton);
 
     if (product.numInCart > 0) {
@@ -89,6 +96,21 @@ function rerenderAllProducts() {
 
     You can remove and recreate the heading element if it makes things easier.
      */
+
+    const productListSection = document.querySelector('.product-list');
+    
+    const heading = productListSection.querySelector('h2');
+    
+    productListSection.innerHTML = '';
+    
+    productListSection.appendChild(heading);
+    
+    for (let product of PRODUCTS) {
+        if (shouldProductBeVisible(product)) {
+            const productCard = renderProductCard(product);
+            productListSection.appendChild(productCard);
+        }
+    }
 }
 
 /**
@@ -99,6 +121,22 @@ function rerenderCart() {
     1. remove all card items
     2. recreate them and the remove buttons based off the data in PRODUCTS
      */
+    const cartSection = document.querySelector('.cart');
+    const cartItemsContainer = cartSection.querySelector('.cart-items');
+
+    cartItemsContainer.innerHTML = '';
+
+    for (let product of PRODUCTS) {
+
+        const itemPara = document.createElement('p');
+        itemPara.textContent = `${product.name} x${product.numInCart}`;
+        cartItemsContainer.appendChild(itemPara);
+
+        const removeButton = document.createElement('button');
+        removeButton.className = 'remove-button';
+        removeButton.textContent = 'Remove';
+        cartItemsContainer.appendChild(removeButton);
+    }
 }
 
 const minPriceInput = document.querySelector("#minPrice");
@@ -110,7 +148,7 @@ const maxPriceInput = document.querySelector("#maxPrice");
  * @return {boolean} whether a product should be visible
  */
 function shouldProductBeVisible(product) {
-
+    return product.price >= minPriceInput.value && product.price <= maxPriceInput.value;
 }
 
 
@@ -129,3 +167,6 @@ function shouldProductBeVisible(product) {
 //         productListSection.appendChild(productCard);
 //     });
 // });
+
+rerenderAllProducts()
+// rerenderCart()
