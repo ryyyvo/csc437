@@ -9,22 +9,38 @@
 <body>
     <header>
         <h1>Stupid Shopping Site</h1>
-        <div class="searchbar">
-            <input placeholder="Search our stupid products" />
-            <button>Search</button>
-        </div>
+        <form role="search" class="searchbar" aria-labelledby="search-title">
+            <label for="product-search"></label>
+            <input 
+                id="product-search" 
+                name="search" 
+                type="search" 
+                placeholder="Search our stupid products" 
+                aria-label="Search products"
+            />
+            <button type="submit" aria-label="Submit search">Search</button>
+        </form>
     </header>
     <main>
         <section>
-            <h2>Filters</h2>
+            <h2 id="filters-heading">Filters</h2>
             <div class="filters">
-                <label>Min price ($)</label>
-                <input id="minPrice" type="number" min="0"/>
-                <label>Max price ($)</label>
-                <input id="maxPrice" type="number" min="1" />
+                <label for="minPrice">Min price ($)</label>
+                <input 
+                    id="minPrice" 
+                    name="minPrice" 
+                    type="number" 
+                    min="0" 
+                />
+                <label for="maxPrice">Max price ($)</label>
+                <input 
+                    id="maxPrice" 
+                    name="maxPrice" 
+                    type="number" 
+                    min="1" 
+                />
             </div>
         </section>
-
         <section class="product-list">
             <h2>Search results</h2>
             <article>
