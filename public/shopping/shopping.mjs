@@ -36,7 +36,46 @@ const PRODUCTS = [ // Imagine this data came in via the server
  * @return {HTMLElement} HTML element representing the product data
  */
 function renderProductCard(product) {
+    const article = document.createElement('article');
+    const img = document.createElement('img');
+    img.src = product.imageSrc;
+    img.alt = product.name;
+    article.appendChild(img);
 
+    const detailsDiv = document.createElement('div');
+    detailsDiv.className = 'product-details';
+
+    const nameHeading = document.createElement('h3');
+    nameHeading.textContent = product.name;
+    detailsDiv.appendChild(nameHeading);
+
+    const descriptionPara = document.createElement('p');
+    descriptionPara.textContent = product.description;
+    detailsDiv.appendChild(descriptionPara);
+
+    const pricePara = document.createElement('p');
+    pricePara.className = 'price';
+    pricePara.textContent = `$${product.price}`;
+    detailsDiv.appendChild(pricePara);
+
+    const buttonContainer = document.createElement('div');
+
+    const buyButton = document.createElement('button');
+    buyButton.className = 'buy-button';
+    buyButton.textContent = 'Add to cart';
+    buttonContainer.appendChild(buyButton);
+
+    if (product.numInCart > 0) {
+        const cartCountSpan = document.createElement('span');
+        cartCountSpan.className = 'num-in-cart';
+        cartCountSpan.textContent = `${product.numInCart} in cart`;
+        buttonContainer.appendChild(cartCountSpan);
+    }
+
+    detailsDiv.appendChild(buttonContainer);
+    article.appendChild(detailsDiv);
+    
+    return article;
 }
 
 /**
@@ -73,3 +112,20 @@ const maxPriceInput = document.querySelector("#maxPrice");
 function shouldProductBeVisible(product) {
 
 }
+
+
+// Test for renderProductCard(product)
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     const productListSection = document.querySelector('.product-list');
+    
+//     // Clear placeholder products
+//     const existingArticles = document.querySelectorAll('.product-list article');
+//     existingArticles.forEach(article => article.remove());
+    
+//     // Add our products from the data model
+//     PRODUCTS.forEach(product => {
+//         const productCard = renderProductCard(product);
+//         productListSection.appendChild(productCard);
+//     });
+// });
