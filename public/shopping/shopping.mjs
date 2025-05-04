@@ -135,6 +135,18 @@ function rerenderCart() {
         const removeButton = document.createElement('button');
         removeButton.className = 'remove-button';
         removeButton.textContent = 'Remove';
+        removeButton.addEventListener('click', function() {
+            // Find the product and set its numInCart to 0
+            for (let p of PRODUCTS) {
+                if (p.name === product.name) {
+                    p.numInCart = 0;
+                    break;
+                }
+            }
+            
+            rerenderAllProducts();
+            rerenderCart();
+        });
         cartItemsContainer.appendChild(removeButton);
     }
 }
@@ -148,7 +160,14 @@ const maxPriceInput = document.querySelector("#maxPrice");
  * @return {boolean} whether a product should be visible
  */
 function shouldProductBeVisible(product) {
-    return product.price >= minPriceInput.value && product.price <= maxPriceInput.value;
+
+    const minPriceStr = minPriceInput.value;
+    const minPrice = minPriceStr === '' ? 0 : Number.parseFloat(minPriceStr);
+
+    const maxPriceStr = maxPriceInput.value;
+    const maxPrice = maxPriceStr === '' ? Infinity : Number.parseFloat(maxPriceStr);
+
+    return product.price >= minPrice && product.price <= maxPrice;
 }
 
 
@@ -168,5 +187,10 @@ function shouldProductBeVisible(product) {
 //     });
 // });
 
-rerenderAllProducts()
-// rerenderCart()
+document.addEventListener('DOMContentLoaded', () => {
+    rerenderAllProducts();
+    rerenderCart();
+    
+    minPriceInput.addEventListener('input', rerenderAllProducts);
+    maxPriceInput.addEventListener('input', rerenderAllProducts);
+});
