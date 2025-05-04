@@ -136,7 +136,6 @@ function rerenderCart() {
         removeButton.className = 'remove-button';
         removeButton.textContent = 'Remove';
         removeButton.addEventListener('click', function() {
-            // Find the product and set its numInCart to 0
             for (let p of PRODUCTS) {
                 if (p.name === product.name) {
                     p.numInCart = 0;
@@ -169,23 +168,6 @@ function shouldProductBeVisible(product) {
 
     return product.price >= minPrice && product.price <= maxPrice;
 }
-
-
-// Test for renderProductCard(product)
-
-// document.addEventListener('DOMContentLoaded', () => {
-//     const productListSection = document.querySelector('.product-list');
-    
-//     // Clear placeholder products
-//     const existingArticles = document.querySelectorAll('.product-list article');
-//     existingArticles.forEach(article => article.remove());
-    
-//     // Add our products from the data model
-//     PRODUCTS.forEach(product => {
-//         const productCard = renderProductCard(product);
-//         productListSection.appendChild(productCard);
-//     });
-// });
 
 document.addEventListener('DOMContentLoaded', () => {
     rerenderAllProducts();
