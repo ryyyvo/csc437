@@ -7,7 +7,7 @@ function App() {
     const minPrice = 0; // Pretend the product filters were connected to these variables...
     const maxPrice = 10;
 
-    const filteredProducts = PRODUCTS.find(product => {
+    const filteredProducts = PRODUCTS.filter(product => {
         if (product.price >= minPrice && product.price <= maxPrice) {
             return product;
         } else {
