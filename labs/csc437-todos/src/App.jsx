@@ -1,17 +1,15 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import TodoItem from './components/TodoItem'
 
-// const taskList = props.tasks?.map((task) => task.name);
 
-function App() {
+function App(props) {
+    const taskList = props.tasks?.map((task) => (
+        <TodoItem id={task.id} name={task.name} completed={task.completed} />
+    ));
+
     return (
-        <main className="m-4"> {/* Tailwind: margin level 4 on all sides */}
-            <div className="flex mb-4"> {/* Unfortunately comments in JSX have to be done like this */}
+        <main className="m-4"> 
+            <div className="flex mb-4">
                 <input 
                   placeholder="New task name"
                   className="border border-gray-300 rounded px-3 py-2 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -24,9 +22,7 @@ function App() {
             <section>
                 <h1 className="text-xl font-bold">To do</h1>
                 <ul>
-                    <TodoItem name="Eat" id="todo-0" completed />
-                    <TodoItem name="Sleep" id="todo-1" />
-                    <TodoItem name="Repeat" id="todo-2" />
+                    {taskList}
                 </ul>
             </section>
         </main>
