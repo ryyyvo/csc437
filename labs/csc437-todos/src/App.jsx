@@ -4,6 +4,9 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import TodoItem from './components/TodoItem'
+
+// const taskList = props.tasks?.map((task) => task.name);
 
 function App() {
     return (
@@ -21,30 +24,9 @@ function App() {
             <section>
                 <h1 className="text-xl font-bold">To do</h1>
                 <ul>
-                    <li>
-                        <label className="mr-1">
-                            <input type="checkbox" /> Eat
-                        </label>
-                        <button className="text-gray-500 hover:text-red-500 p-1 rounded cursor-pointer">
-                          <FontAwesomeIcon icon={faTrash} title="Delete task" />
-                        </button>
-                    </li>
-                    <li>
-                        <label className="mr-1">
-                            <input type="checkbox"/> Sleep
-                        </label>
-                        <button className="text-gray-500 hover:text-red-500 p-1 rounded cursor-pointer">
-                          <FontAwesomeIcon icon={faTrash} title="Delete task" />
-                        </button>
-                    </li>
-                    <li>
-                        <label className="mr-1">
-                            <input type="checkbox" /> Repeat
-                        </label>
-                        <button className="text-gray-500 hover:text-red-500 p-1 rounded cursor-pointer">
-                          <FontAwesomeIcon icon={faTrash} title="Delete task" />
-                        </button>
-                    </li>
+                    <TodoItem name="Eat" id="todo-0" completed />
+                    <TodoItem name="Sleep" id="todo-1" />
+                    <TodoItem name="Repeat" id="todo-2" />
                 </ul>
             </section>
         </main>
