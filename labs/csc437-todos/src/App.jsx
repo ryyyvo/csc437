@@ -23,6 +23,11 @@ function App() {
         setTasks(updatedTasks);
     }
 
+    function deleteTask(id) {
+        const remainingTasks = tasks.filter(task => task.id !== id);
+        setTasks(remainingTasks);
+    }
+
     const taskList = tasks?.map((task) => (
         <TodoItem 
             key={task.id}
@@ -30,6 +35,7 @@ function App() {
             name={task.name} 
             completed={task.completed} 
             onToggle={toggleTaskCompleted}
+            onDelete={deleteTask}
         />
     ));
 

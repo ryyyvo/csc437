@@ -13,7 +13,10 @@ function TodoItem(props) {
         /> 
         {props.name}
       </label>
-      <button className="text-gray-500 hover:text-red-500 active:scale-125 transform transition-transform p-1 rounded cursor-pointer">
+      <button 
+        className="text-gray-500 hover:text-red-500 active:scale-125 transform transition-transform p-1 rounded cursor-pointer"
+        onClick={() => props.onDelete(props.id)}
+      >
         <FontAwesomeIcon icon={faTrash} title="Delete task" />
       </button>
     </li>
