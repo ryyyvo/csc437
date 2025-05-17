@@ -55,7 +55,7 @@ function App() {
         <main className="m-4"> 
             <button 
                 onClick={() => setIsModalOpen(true)}
-                className="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-medium px-4 py-2 mb-4 rounded transition-colors"
+                className="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-medium px-4 py-2 mb-4 rounded transition-colors cursor-pointer"
             >
                 Add Task
             </button>

@@ -1,11 +1,27 @@
+import { useRef } from 'react';
+
 function Modal(props) {
+  const modalContentRef = useRef(null);   
   if (!props.isOpen) {
     return null;
   }
+
+  const handleOverlayClick = (event) => {
+    if (modalContentRef.current && !modalContentRef.current.contains(event.target)) {
+      props.onCloseRequested();
+    }
+  };
   
   return (
-    <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-xl">
+    <div 
+      className="fixed inset-0 flex justify-center items-center z-50"
+      style={{ backgroundColor: 'rgba(31, 41, 55, 0.25)' }}
+      onClick={handleOverlayClick} 
+    >
+      <div 
+        ref={modalContentRef} 
+        className="bg-white p-6 rounded-lg shadow-xl"
+      >
         <header className="flex justify-between items-center mb-4 pb-2">
           <h2 className="text-lg font-semibold">{props.headerLabel}</h2>
           <button 
