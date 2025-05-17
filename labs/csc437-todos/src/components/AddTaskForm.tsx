@@ -1,11 +1,15 @@
 import { useState } from 'react';
 
-function AddTaskForm({ onNewTask }) {
-    const [taskName, setTaskName] = useState('');
+interface AddTaskFormProps {
+  onNewTask: (name: string) => void;
+}
+
+function AddTaskForm(props: AddTaskFormProps) {
+    const [taskName, setTaskName] = useState<string>('');
 
     const handleSubmit = () => {
         if (taskName.trim() !== "") {
-            onNewTask(taskName);
+            props.onNewTask(taskName);
             setTaskName("");
         }
     };

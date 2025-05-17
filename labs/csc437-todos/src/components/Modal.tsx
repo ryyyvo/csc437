@@ -1,13 +1,20 @@
 import { useRef } from 'react';
 
-function Modal(props) {
-  const modalContentRef = useRef(null);   
+interface ModalProps {
+  headerLabel: string;
+  isOpen: boolean;
+  onCloseRequested: () => void;
+  children: React.ReactNode;
+}
+
+function Modal(props: ModalProps) {
+  const modalContentRef = useRef<HTMLDivElement | null>(null);   
   if (!props.isOpen) {
     return null;
   }
 
-  const handleOverlayClick = (event) => {
-    if (modalContentRef.current && !modalContentRef.current.contains(event.target)) {
+  const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (modalContentRef.current && !modalContentRef.current.contains(event.target as Node)) {
       props.onCloseRequested();
     }
   };

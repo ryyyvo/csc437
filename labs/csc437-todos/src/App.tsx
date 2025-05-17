@@ -5,17 +5,23 @@ import TodoItem from './components/TodoItem'
 import AddTaskForm from './components/AddTaskForm';
 import Modal from './components/Modal';
 
-const INITIAL_TASK_LIST = [
+interface Task {
+  id: string;
+  name: string;
+  completed: boolean;
+}
+
+const INITIAL_TASK_LIST: Task[] = [
   { id: "todo-0", name: "Eat", completed: true },
   { id: "todo-1", name: "Sleep", completed: false },
   { id: "todo-2", name: "Repeat", completed: false }
 ];
 
 function App() {
-    const [tasks, setTasks] = useState(INITIAL_TASK_LIST);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [tasks, setTasks] = useState<Task[]>(INITIAL_TASK_LIST);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-    function toggleTaskCompleted(id) {
+    function toggleTaskCompleted(id: string) {
         const updatedTasks = tasks.map(task => {
             if (id === task.id) {
                 return {...task, completed: !task.completed}
@@ -25,7 +31,7 @@ function App() {
         setTasks(updatedTasks);
     }
 
-    function deleteTask(id) {
+    function deleteTask(id: string) {
         const remainingTasks = tasks.filter(task => task.id !== id);
         setTasks(remainingTasks);
     }
@@ -41,7 +47,7 @@ function App() {
         />
     ));
 
-    function addTask(name) {
+    function addTask(name: string) {
         const newTask = {
             id: `todo-${nanoid()}`,
             name: name,
