@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 import './App.css'
 import TodoItem from './components/TodoItem'
 import AddTaskForm from './components/AddTaskForm';
+import Modal from './components/Modal';
 
 const INITIAL_TASK_LIST = [
   { id: "todo-0", name: "Eat", completed: true },
@@ -50,7 +51,9 @@ function App() {
 
     return (
         <main className="m-4"> 
-            <AddTaskForm onNewTask={addTask} />
+            <Modal headerLabel="Add New Task">
+                <AddTaskForm onNewTask={addTask} />
+            </Modal>
             <section>
                 <h1 className="text-xl font-bold">To do</h1>
                 <ul>
