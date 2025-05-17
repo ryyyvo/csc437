@@ -1,4 +1,8 @@
 function Modal(props) {
+  if (!props.isOpen) {
+    return null;
+  }
+  
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-xl">
@@ -7,6 +11,7 @@ function Modal(props) {
           <button 
             className="text-gray-500 hover:text-gray-800 font-bold px-2 py-1 rounded hover:bg-gray-200 transition-colors cursor-pointer"
             aria-label="Close"
+            onClick={props.onCloseRequested}
           >
             X
           </button>

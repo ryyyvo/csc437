@@ -13,6 +13,7 @@ const INITIAL_TASK_LIST = [
 
 function App() {
     const [tasks, setTasks] = useState(INITIAL_TASK_LIST);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     function toggleTaskCompleted(id) {
         const updatedTasks = tasks.map(task => {
@@ -47,11 +48,22 @@ function App() {
             completed: false
         };
         setTasks([...tasks, newTask]);
+        setIsModalOpen(false);
     }
 
     return (
         <main className="m-4"> 
-            <Modal headerLabel="Add New Task">
+            <button 
+                onClick={() => setIsModalOpen(true)}
+                className="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-medium px-4 py-2 mb-4 rounded transition-colors"
+            >
+                Add Task
+            </button>
+            <Modal 
+                headerLabel="Add New Task" 
+                isOpen={isModalOpen}
+                onCloseRequested={() => setIsModalOpen(false)}
+            >
                 <AddTaskForm onNewTask={addTask} />
             </Modal>
             <section>
