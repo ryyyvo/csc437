@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { fetchDataFromServer } from "../MockAppData.ts";
+import type { IImageData } from "../MockAppData.ts";
+import { useOutletContext } from "react-router";
 
 interface IImageDetailsProps {
     imageId: string;
 }
 
 export function ImageDetails({ imageId }: IImageDetailsProps) {
-    const [imageData, _setImageData] = useState(fetchDataFromServer);
+    const imageData = useOutletContext<IImageData[]>();
     const image = imageData.find(image => image.id === imageId);
     
     if (!image) {
