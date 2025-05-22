@@ -1,17 +1,18 @@
+import { Routes, Route } from "react-router";
 import { AllImages } from "./images/AllImages.tsx";
 import { ImageDetails } from "./images/ImageDetails.tsx";
 import { UploadPage } from "./UploadPage.tsx";
 import { LoginPage } from "./LoginPage.tsx";
 
 function App() {
-    const POSSIBLE_PAGES = [
-        <AllImages />,
-        <ImageDetails imageId={"0"} />,
-        <UploadPage />,
-        <LoginPage />
-    ];
-
-    return POSSIBLE_PAGES[0];
+    return (
+        <Routes>
+            <Route path="/" element={<AllImages />} />
+            <Route path="/images/:id" element={<ImageDetails />} />
+            <Route path="/upload" element={<UploadPage />} />
+            <Route path="/login" element={<LoginPage />} />
+        </Routes>
+    );
 }
 
 export default App;
