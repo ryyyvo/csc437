@@ -6,6 +6,7 @@ import { ImageDetails } from "./images/ImageDetails.tsx";
 import { UploadPage } from "./UploadPage.tsx";
 import { LoginPage } from "./LoginPage.tsx";
 import { MainLayout } from "./MainLayout.tsx";
+import { ValidRoutes } from "../../backend/src/shared/ValidRoutes.ts";
 
 function ImageDetailsWrapper() {
   const { id } = useParams();
@@ -17,11 +18,11 @@ function App() {
     
     return (
         <Routes>
-            <Route path="/" element={<MainLayout imageData={imageData} />}>
+            <Route path={ValidRoutes.HOME} element={<MainLayout imageData={imageData} />}>
                 <Route index element={<AllImages imageData={imageData} />} />
-                <Route path="images/:id" element={<ImageDetailsWrapper />} />
-                <Route path="upload" element={<UploadPage />} />
-                <Route path="login" element={<LoginPage />} />
+                <Route path={`${ValidRoutes.IMAGES}/:id`} element={<ImageDetailsWrapper />} />
+                <Route path={ValidRoutes.UPLOAD} element={<UploadPage />} />
+                <Route path={ValidRoutes.LOGIN} element={<LoginPage />} />
             </Route>
         </Routes>
     );
