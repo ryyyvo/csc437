@@ -1,6 +1,6 @@
 import { Routes, Route, useParams } from "react-router";
-import { useState } from "react";
-import { fetchDataFromServer } from "./MockAppData.ts";
+import { useEffect, useState } from "react";
+import { type IApiImageData } from "../../backend/src/shared/ApiImageData.ts";
 import { AllImages } from "./images/AllImages.tsx";
 import { ImageDetails } from "./images/ImageDetails.tsx";
 import { UploadPage } from "./UploadPage.tsx";
@@ -14,12 +14,35 @@ function ImageDetailsWrapper() {
 }
 
 function App() {
-    const [imageData, _setImageData] = useState(fetchDataFromServer);
-    
+    const [imageData, _setImageData] = useState<IApiImageData[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [hasError, setHasError] = useState(false);
+
+    useEffect(() => {
+    // Code in here will run when App is created
+    // (Note in dev mode App is created twice)
+        fetch("/api/images")
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                _setImageData(data);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                console.error("There was a problem with the fetch operation:", error);
+                setHasError(true);
+                setIsLoading(false);
+            });
+}, []);
+
     return (
         <Routes>
             <Route path={ValidRoutes.HOME} element={<MainLayout imageData={imageData} />}>
-                <Route index element={<AllImages imageData={imageData} />} />
+                <Route index element={<AllImages imageData={imageData} isLoading={isLoading} hasError={hasError} />} />
                 <Route path={`${ValidRoutes.IMAGES}/:id`} element={<ImageDetailsWrapper />} />
                 <Route path={ValidRoutes.UPLOAD} element={<UploadPage />} />
                 <Route path={ValidRoutes.LOGIN} element={<LoginPage />} />

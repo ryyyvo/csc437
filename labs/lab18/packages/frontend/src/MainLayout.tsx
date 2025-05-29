@@ -1,9 +1,9 @@
 import { Outlet } from "react-router";
 import { Header } from "./Header.tsx";
-import type { IImageData } from "./MockAppData.ts";
+import type { IApiImageData } from "../../backend/src/shared/ApiImageData.ts";
 
 interface MainLayoutProps {
-    imageData: IImageData[];
+    imageData: IApiImageData[];
 }
 
 export function MainLayout({ imageData }: MainLayoutProps) {

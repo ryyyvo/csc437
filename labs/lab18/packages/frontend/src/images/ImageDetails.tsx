@@ -1,4 +1,4 @@
-import type { IImageData } from "../MockAppData.ts";
+import type { IApiImageData } from "../../../backend/src/shared/ApiImageData.ts";
 import { useOutletContext } from "react-router";
 
 interface IImageDetailsProps {
@@ -6,7 +6,7 @@ interface IImageDetailsProps {
 }
 
 export function ImageDetails({ imageId }: IImageDetailsProps) {
-    const imageData = useOutletContext<IImageData[]>();
+    const imageData = useOutletContext<IApiImageData[]>();
     const image = imageData.find(image => image.id === imageId);
     
     if (!image) {
