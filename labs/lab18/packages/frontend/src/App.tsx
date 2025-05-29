@@ -18,6 +18,16 @@ function App() {
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
 
+    function updateImageName(imageId: string, newName: string) {
+        _setImageData(prevData => 
+            prevData.map(image => 
+                image.id === imageId 
+                    ? { ...image, name: newName }
+                    : image
+            )
+        );
+    }
+
     useEffect(() => {
     // Code in here will run when App is created
     // (Note in dev mode App is created twice)
@@ -37,11 +47,11 @@ function App() {
                 setHasError(true);
                 setIsLoading(false);
             });
-}, []);
+    }, []);
 
     return (
         <Routes>
-            <Route path={ValidRoutes.HOME} element={<MainLayout imageData={imageData} />}>
+            <Route path={ValidRoutes.HOME} element={<MainLayout imageData={imageData} updateImageName={updateImageName} />}>
                 <Route index element={<AllImages imageData={imageData} isLoading={isLoading} hasError={hasError} />} />
                 <Route path={`${ValidRoutes.IMAGES}/:id`} element={<ImageDetailsWrapper />} />
                 <Route path={ValidRoutes.UPLOAD} element={<UploadPage />} />

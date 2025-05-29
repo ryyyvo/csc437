@@ -2,16 +2,16 @@ import { Outlet } from "react-router";
 import { Header } from "./Header.tsx";
 import type { IApiImageData } from "../../backend/src/shared/ApiImageData.ts";
 
-interface MainLayoutProps {
+interface IMainLayoutProps {
     imageData: IApiImageData[];
+    updateImageName: (imageId: string, newName: string) => void;
 }
-
-export function MainLayout({ imageData }: MainLayoutProps) {
+export function MainLayout({ imageData, updateImageName }: IMainLayoutProps) {
     return (
         <div>
             <Header />
-            <div style={{padding: "0 2em"}}>
-                <Outlet context={imageData} />
+            <div className="MainLayout" style={{padding: "0 2em"}}>
+                <Outlet context={{ imageData, updateImageName }} />
             </div>
         </div>
     );
