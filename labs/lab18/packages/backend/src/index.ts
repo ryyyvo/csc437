@@ -15,7 +15,6 @@ async function initializeMongo() {
         await mongoClient.connect();
         console.log("Successfully connected to MongoDB");
         
-        // Test the connection by listing collections
         const collections = await mongoClient.db().listCollections().toArray();
         console.log("Available collections:", collections.map(col => col.name));
         
