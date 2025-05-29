@@ -4,7 +4,7 @@ import { ValidRoutes } from "./shared/ValidRoutes";
 import { fetchDataFromServer } from "./shared/ApiImageData";
 import { connectMongo } from "./connectMongo";
 
-dotenv.config(); // Read the .env file in the current working directory, and load values into process.env.
+dotenv.config();
 const PORT = process.env.PORT || 3000;
 const STATIC_DIR = process.env.STATIC_DIR || "public";
 
@@ -38,7 +38,7 @@ app.get("/api/hello", (req: Request, res: Response) => {
 });
 
 app.get("/api/images", async (req: Request, res: Response) => {
-    await waitDuration(1000); // Wait 1 second
+    await waitDuration(1000);
     const images = fetchDataFromServer();
     res.json(images);
 });
