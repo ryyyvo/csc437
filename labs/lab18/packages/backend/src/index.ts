@@ -2,10 +2,29 @@ import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import { ValidRoutes } from "./shared/ValidRoutes";
 import { fetchDataFromServer } from "./shared/ApiImageData";
+import { connectMongo } from "./connectMongo";
 
 dotenv.config(); // Read the .env file in the current working directory, and load values into process.env.
 const PORT = process.env.PORT || 3000;
 const STATIC_DIR = process.env.STATIC_DIR || "public";
+
+const mongoClient = connectMongo();
+
+async function initializeMongo() {
+    try {
+        await mongoClient.connect();
+        console.log("Successfully connected to MongoDB");
+        
+        // Test the connection by listing collections
+        const collections = await mongoClient.db().listCollections().toArray();
+        console.log("Available collections:", collections.map(col => col.name));
+        
+    } catch (error) {
+        console.error("Failed to connect to MongoDB:", error);
+    }
+}
+
+initializeMongo();
 
 const app = express();
 
