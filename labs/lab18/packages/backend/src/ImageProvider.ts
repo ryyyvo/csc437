@@ -1,7 +1,10 @@
-import { MongoClient, Collection } from "mongodb";
+import { MongoClient, Collection, ObjectId } from "mongodb";
 
 interface IImageDocument {
-    // TODO
+    _id: ObjectId;
+    authorId: string;
+    name: string;
+    src: string;
 }
 
 export class ImageProvider {

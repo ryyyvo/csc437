@@ -1,14 +1,15 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import { ValidRoutes } from "./shared/ValidRoutes";
-import { fetchDataFromServer } from "./shared/ApiImageData";
 import { connectMongo } from "./connectMongo";
+import { ImageProvider } from "./ImageProvider";
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
 const STATIC_DIR = process.env.STATIC_DIR || "public";
 
 const mongoClient = connectMongo();
+let imageProvider: ImageProvider;
 
 async function initializeMongo() {
     try {
@@ -17,6 +18,8 @@ async function initializeMongo() {
         
         const collections = await mongoClient.db().listCollections().toArray();
         console.log("Available collections:", collections.map(col => col.name));
+        
+        imageProvider = new ImageProvider(mongoClient);
         
     } catch (error) {
         console.error("Failed to connect to MongoDB:", error);
@@ -39,8 +42,13 @@ app.get("/api/hello", (req: Request, res: Response) => {
 
 app.get("/api/images", async (req: Request, res: Response) => {
     await waitDuration(1000);
-    const images = fetchDataFromServer();
-    res.json(images);
+    try {
+        const images = await imageProvider.getAllImages();
+        res.json(images);
+    } catch (error) {
+        console.error("Error fetching images:", error);
+        res.status(500).json({ error: "Failed to fetch images" });
+    }
 });
 
 app.get(Object.values(ValidRoutes) as string[], (req: Request, res: Response) => {
