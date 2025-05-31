@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import { ImageProvider } from "../ImageProvider";
 
 function waitDuration(numMs: number): Promise<void> {
@@ -6,7 +6,7 @@ function waitDuration(numMs: number): Promise<void> {
 }
 
 export function registerImageRoutes(app: express.Application, imageProvider: ImageProvider) {
-    app.get("/api/images", async (req: express.Request, res: express.Response) => {
+    app.get("/api/images", async (req: Request, res: Response) => {
         await waitDuration(1000);
         try {
             const images = await imageProvider.getAllImages();
@@ -17,7 +17,7 @@ export function registerImageRoutes(app: express.Application, imageProvider: Ima
         }
     });
 
-    app.get("/api/images/search", async (req: express.Request, res: express.Response) => {
+    app.get("/api/images/search", async (req: Request, res: Response) => {
         const searchQuery = req.query.q as string;
         console.log("Search query received:", searchQuery);
         
@@ -28,6 +28,25 @@ export function registerImageRoutes(app: express.Application, imageProvider: Ima
             console.error("Error searching images:", error);
             res.status(500).json({ error: "Failed to search images" });
         }
+    });
+
+    app.put("/api/images/:id", async (req: Request, res: Response): Promise<any> => {
+        const imageId = req.params.id;
+        const newName = req.body.name;
+
+        if (!newName) {
+            return res.status(400).json({ error: "Name is required" });
+        }
+        
+        console.log(`Updating image ${imageId} with new name: ${newName}`);
+        
+        // For now, just respond with a confirmation message
+        res.json({
+            message: `I will try to set the name of ${imageId} to ${newName}`,
+            success: true,
+            imageId,
+            newName
+        });
     });
 }
 
