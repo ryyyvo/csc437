@@ -42,8 +42,11 @@ app.get("/api/hello", (req: Request, res: Response) => {
 // Register image routes
 registerImageRoutes(app, imageProvider);
 
-app.get(Object.values(ValidRoutes) as string[], (req: Request, res: Response) => {
-    res.sendFile("index.html", { root: STATIC_DIR });
+app.get([
+  ...Object.values(ValidRoutes),
+  `${ValidRoutes.IMAGES}/*` // This will catch any route that starts with /images/
+], (req: Request, res: Response) => {
+  res.sendFile("index.html", { root: STATIC_DIR });
 });
 
 app.listen(PORT, () => {
