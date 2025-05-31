@@ -39,12 +39,11 @@ app.get("/api/hello", (req: Request, res: Response) => {
     res.send("Hello, World");
 });
 
-// Register image routes
 registerImageRoutes(app, imageProvider);
 
 app.get([
   ...Object.values(ValidRoutes),
-  `${ValidRoutes.IMAGES}/*` // This will catch any route that starts with /images/
+  `${ValidRoutes.IMAGES}/*`
 ], (req: Request, res: Response) => {
   res.sendFile("index.html", { root: STATIC_DIR });
 });
