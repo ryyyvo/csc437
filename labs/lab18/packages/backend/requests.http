@@ -10,4 +10,4 @@ Content-Type: application/json # Content-Type header is a must if you're sending
 { "a": 1, "b": 2 }
 
 ###
-GET http://localhost:3000/api/images/search?q=cat
+GET http://localhost:3000/api/images/search?q=Huskies

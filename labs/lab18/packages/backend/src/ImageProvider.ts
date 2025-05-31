@@ -34,9 +34,14 @@ export class ImageProvider {
         this.userCollection = this.mongoClient.db().collection(userCollectionName);
     }
 
-    async getAllImages(): Promise<IApiImageData[]> {
-        // get images from the database
-        const images = await this.imageCollection.find().toArray();
+    async getAllImages(searchQuery?: string): Promise<IApiImageData[]> {
+        // Create filter based on searchQuery
+        const filter = searchQuery 
+            ? { name: { $regex: searchQuery, $options: 'i' } } // 'i' for case-insensitive
+            : {};
+            
+        // get images from the database with optional filter
+        const images = await this.imageCollection.find(filter).toArray();
         
         // get unique authorId's from the images
         const authorIds = [...new Set(images.map(image => image.authorId))];

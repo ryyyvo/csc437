@@ -21,7 +21,13 @@ export function registerImageRoutes(app: express.Application, imageProvider: Ima
         const searchQuery = req.query.q as string;
         console.log("Search query received:", searchQuery);
         
-        res.json({ message: "Search endpoint reached", query: searchQuery });
+        try {
+            const images = await imageProvider.getAllImages(searchQuery);
+            res.json(images);
+        } catch (error) {
+            console.error("Error searching images:", error);
+            res.status(500).json({ error: "Failed to search images" });
+        }
     });
 }
 
