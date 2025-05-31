@@ -35,7 +35,6 @@ export class ImageProvider {
     }
 
     async getAllImages(searchQuery?: string): Promise<IApiImageData[]> {
-        // Create filter based on searchQuery
         const filter = searchQuery 
             ? { name: { $regex: searchQuery, $options: 'i' } } // 'i' for case-insensitive
             : {};
@@ -75,16 +74,13 @@ export class ImageProvider {
     }
 
     async updateImageName(imageId: string, newName: string): Promise<number> {
-        // Convert string ID to MongoDB ObjectId
         const objectId = new ObjectId(imageId);
-        
-        // Update the document
+
         const result = await this.imageCollection.updateOne(
             { _id: objectId },
             { $set: { name: newName } }
         );
-        
-        // Return the number of documents matched
+
         return result.matchedCount;
     }
 }

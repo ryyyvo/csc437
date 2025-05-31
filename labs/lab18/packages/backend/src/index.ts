@@ -29,7 +29,6 @@ async function initializeMongo() {
 
 const app = express();
 
-// Initialize MongoDB connection
 initializeMongo();
 
 app.use(express.static(STATIC_DIR));

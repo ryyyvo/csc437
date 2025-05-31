@@ -20,4 +20,28 @@ Content-Type: application/json
   "name": "Siberian Huskies Resting"
 }
 
+### ERROR TEST 1: Invalid ObjectId
+PUT http://localhost:3000/api/images/invalid-id
+Content-Type: application/json
+
+{
+  "name": "This should fail with 404"
+}
+
+### ERROR TEST 2: Missing name field
+PUT http://localhost:3000/api/images/6837eb83b163fbc32ec9785c
+Content-Type: application/json
+
+{
+  "title": "This should fail with 400 because we used title instead of name"
+}
+
+### ERROR TEST 3: Name too long
+PUT http://localhost:3000/api/images/6837eb83b163fbc32ec9785c
+Content-Type: application/json
+
+{
+  "name": "This is an excessively long image name that exceeds the 100 character limit we've set. It's really, really, really, really, really, really, really, really, really long!"
+}
+
 ###

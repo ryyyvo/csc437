@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { ImageProvider } from "../ImageProvider";
+import { ObjectId } from "mongodb";
 
 function waitDuration(numMs: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, numMs));
@@ -33,18 +34,42 @@ export function registerImageRoutes(app: express.Application, imageProvider: Ima
     app.put("/api/images/:id", async (req: Request, res: Response): Promise<any> => {
         const imageId = req.params.id;
         const newName = req.body.name;
+        const MAX_NAME_LENGTH = 100;
 
+        // check if request is properly formatted
         if (!newName) {
-            return res.status(400).json({ error: "Name is required" });
+            return res.status(400).send({
+                error: "Bad Request",
+                message: "Name is required in the request body"
+            });
+        }
+
+        // check if image name is too long
+        if (newName.length > MAX_NAME_LENGTH) {
+            return res.status(422).send({
+                error: "Unprocessable Entity",
+                message: `Image name exceeds ${MAX_NAME_LENGTH} characters`
+            });
+        }
+
+        // check if id is a valid ObjectId
+        if (!ObjectId.isValid(imageId)) {
+            return res.status(404).send({
+                error: "Not Found",
+                message: "Image does not exist"
+            });
         }
         
         console.log(`Updating image ${imageId} with new name: ${newName}`);
         
         try {
             const matchedCount = await imageProvider.updateImageName(imageId, newName);
-            
+
             if (matchedCount === 0) {
-                return res.status(404).json({ error: "Image not found" });
+                return res.status(404).send({
+                    error: "Not Found",
+                    message: "Image does not exist"
+                });
             }
             
             res.status(204).send();
