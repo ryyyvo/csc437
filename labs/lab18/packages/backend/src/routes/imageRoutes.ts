@@ -16,5 +16,12 @@ export function registerImageRoutes(app: express.Application, imageProvider: Ima
             res.status(500).json({ error: "Failed to fetch images" });
         }
     });
+
+    app.get("/api/images/search", async (req: express.Request, res: express.Response) => {
+        const searchQuery = req.query.q as string;
+        console.log("Search query received:", searchQuery);
+        
+        res.json({ message: "Search endpoint reached", query: searchQuery });
+    });
 }
 
