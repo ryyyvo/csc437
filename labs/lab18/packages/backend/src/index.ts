@@ -3,13 +3,14 @@ import dotenv from "dotenv";
 import { ValidRoutes } from "./shared/ValidRoutes";
 import { connectMongo } from "./connectMongo";
 import { ImageProvider } from "./ImageProvider";
+import { registerImageRoutes } from "./routes/imageRoutes";
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
 const STATIC_DIR = process.env.STATIC_DIR || "public";
 
 const mongoClient = connectMongo();
-let imageProvider: ImageProvider;
+let imageProvider = new ImageProvider(mongoClient);
 
 async function initializeMongo() {
     try {
@@ -26,32 +27,21 @@ async function initializeMongo() {
     }
 }
 
-initializeMongo();
-
 const app = express();
 
-function waitDuration(numMs: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, numMs));
-}
+// Initialize MongoDB connection
+initializeMongo();
 
 app.use(express.static(STATIC_DIR));
-app.use(express.json()) // for parsing application/json
-app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(express.json()); // for parsing application/json
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.get("/api/hello", (req: Request, res: Response) => {
     res.send("Hello, World");
 });
 
-app.get("/api/images", async (req: Request, res: Response) => {
-    await waitDuration(1000);
-    try {
-        const images = await imageProvider.getAllImages();
-        res.json(images);
-    } catch (error) {
-        console.error("Error fetching images:", error);
-        res.status(500).json({ error: "Failed to fetch images" });
-    }
-});
+// Register image routes
+registerImageRoutes(app, imageProvider);
 
 app.get(Object.values(ValidRoutes) as string[], (req: Request, res: Response) => {
     res.sendFile("index.html", { root: STATIC_DIR });
