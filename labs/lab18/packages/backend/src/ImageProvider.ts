@@ -73,4 +73,18 @@ export class ImageProvider {
             };
         });
     }
+
+    async updateImageName(imageId: string, newName: string): Promise<number> {
+        // Convert string ID to MongoDB ObjectId
+        const objectId = new ObjectId(imageId);
+        
+        // Update the document
+        const result = await this.imageCollection.updateOne(
+            { _id: objectId },
+            { $set: { name: newName } }
+        );
+        
+        // Return the number of documents matched
+        return result.matchedCount;
+    }
 }

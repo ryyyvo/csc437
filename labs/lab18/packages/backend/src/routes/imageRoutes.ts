@@ -40,13 +40,18 @@ export function registerImageRoutes(app: express.Application, imageProvider: Ima
         
         console.log(`Updating image ${imageId} with new name: ${newName}`);
         
-        // For now, just respond with a confirmation message
-        res.json({
-            message: `I will try to set the name of ${imageId} to ${newName}`,
-            success: true,
-            imageId,
-            newName
-        });
+        try {
+            const matchedCount = await imageProvider.updateImageName(imageId, newName);
+            
+            if (matchedCount === 0) {
+                return res.status(404).json({ error: "Image not found" });
+            }
+            
+            res.status(204).send();
+        } catch (error) {
+            console.error("Error updating image name:", error);
+            res.status(500).json({ error: "Failed to update image name" });
+        }
     });
 }
 
