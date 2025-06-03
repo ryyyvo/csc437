@@ -6,12 +6,12 @@ import { ImageProvider } from "./ImageProvider";
 import { CredentialsProvider } from "./CredentialsProvider";
 import { registerImageRoutes } from "./routes/imageRoutes";
 import { registerAuthRoutes } from "./routes/authRoutes";
+import { verifyAuthToken } from "./middleware/authMiddleware";
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
 const STATIC_DIR = process.env.STATIC_DIR || "public";
 
-// Safely read JWT_SECRET
 const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) {
     throw new Error("Missing JWT_SECRET from environment variables");
@@ -39,7 +39,6 @@ async function initializeMongo() {
 
 const app = express();
 
-// Store JWT_SECRET in app.locals for access in route handlers
 app.locals.JWT_SECRET = JWT_SECRET;
 
 initializeMongo();
@@ -52,8 +51,11 @@ app.get("/api/hello", (req: Request, res: Response) => {
     res.send("Hello, World");
 });
 
-registerImageRoutes(app, imageProvider);
 registerAuthRoutes(app, credentialsProvider);
+
+app.use("/api/*", verifyAuthToken);
+
+registerImageRoutes(app, imageProvider);
 
 app.get([
   ...Object.values(ValidRoutes),

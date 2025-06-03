@@ -60,9 +60,25 @@ export function registerImageRoutes(app: express.Application, imageProvider: Ima
             });
         }
         
-        console.log(`Updating image ${imageId} with new name: ${newName}`);
-        
         try {
+            const imageAuthor = await imageProvider.getImageAuthor(imageId);
+            
+            if (!imageAuthor) {
+                return res.status(404).send({
+                    error: "Not Found",
+                    message: "Image does not exist"
+                });
+            }
+            
+            if (!req.user || req.user.username !== imageAuthor) {
+                return res.status(403).send({
+                    error: "Forbidden",
+                    message: "You can only edit your own images"
+                });
+            }
+            
+            console.log(`Updating image ${imageId} with new name: ${newName}`);
+            
             const matchedCount = await imageProvider.updateImageName(imageId, newName);
 
             if (matchedCount === 0) {
