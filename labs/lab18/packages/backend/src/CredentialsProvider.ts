@@ -25,10 +25,6 @@ export class CredentialsProvider {
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(plaintextPassword, salt);
-        
-        // for debugging - remove later
-        console.log("Salt:", salt);
-        console.log("Hash:", hashedPassword);
 
         await this.collection.insertOne({
             username: username,
@@ -39,14 +35,12 @@ export class CredentialsProvider {
     }
 
     async verifyPassword(username: string, plaintextPassword: string) {
-        // Get the user record from database
         const user = await this.collection.findOne({ username: username });
         
         if (!user) {
-            return false; // User doesn't exist
+            return false;
         }
-        
-        // Compare the plaintext password with the hashed password using bcrypt
+
         const isValid = await bcrypt.compare(plaintextPassword, user.password);
         return isValid;
     }
