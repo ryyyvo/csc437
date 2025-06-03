@@ -3,7 +3,9 @@ import dotenv from "dotenv";
 import { ValidRoutes } from "./shared/ValidRoutes";
 import { connectMongo } from "./connectMongo";
 import { ImageProvider } from "./ImageProvider";
+import { CredentialsProvider } from "./CredentialsProvider";
 import { registerImageRoutes } from "./routes/imageRoutes";
+import { registerAuthRoutes } from "./routes/authRoutes";
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -11,6 +13,7 @@ const STATIC_DIR = process.env.STATIC_DIR || "public";
 
 const mongoClient = connectMongo();
 let imageProvider = new ImageProvider(mongoClient);
+let credentialsProvider = new CredentialsProvider(mongoClient);
 
 async function initializeMongo() {
     try {
@@ -21,6 +24,7 @@ async function initializeMongo() {
         console.log("Available collections:", collections.map(col => col.name));
         
         imageProvider = new ImageProvider(mongoClient);
+        credentialsProvider = new CredentialsProvider(mongoClient);
         
     } catch (error) {
         console.error("Failed to connect to MongoDB:", error);
@@ -40,6 +44,7 @@ app.get("/api/hello", (req: Request, res: Response) => {
 });
 
 registerImageRoutes(app, imageProvider);
+registerAuthRoutes(app, credentialsProvider);
 
 app.get([
   ...Object.values(ValidRoutes),
