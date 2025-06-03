@@ -116,4 +116,52 @@ Content-Type: application/json
 
 { "username": "alice", "password": "password123" }
 
+### OWNERSHIP TESTS
+
+### Register a user with same username as image author
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{ "username": "chunkylover23", "password": "password" }
+
+### Login as chunkylover23 to get token
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{ "username": "chunkylover23", "password": "password" }
+
+### Update image as owner - SHOULD WORK
+### Replace YOUR_JWT_TOKEN_HERE with token from chunkylover23 login
+PUT http://localhost:3000/api/images/6837eb83b163fbc32ec9785c
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNodW5reWxvdmVyMjMiLCJpYXQiOjE3NDg5OTQyNTMsImV4cCI6MTc0OTA4MDY1M30.3ALPwSkFtdmWp3g9BG7u_3Pul15t77aWA0SzFwqqPFk
+
+{
+  "name": "Updated by Owner"
+}
+
+### Login as different user
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{ "username": "testuser", "password": "password" }
+
+### Try to update image as non-owner - SHOULD FAIL (403 Forbidden)
+### Replace YOUR_JWT_TOKEN_HERE with token from testuser login
+PUT http://localhost:3000/api/images/6837eb83b163fbc32ec9785c
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNzQ4OTk0Mjk4LCJleHAiOjE3NDkwODA2OTh9.vNY49ujQOuRekiHDVY4KZoreCpDQUu1ruImJtTcrQ48
+
+{
+  "name": "Trying to update someone else's image"
+}
+
+### Try to update without token - SHOULD FAIL (401 Unauthorized)
+PUT http://localhost:3000/api/images/6837eb83b163fbc32ec9785c
+Content-Type: application/json
+
+{
+  "name": "No token provided"
+}
+
 ###
