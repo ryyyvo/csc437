@@ -104,4 +104,16 @@ Content-Type: application/json
 
 { "username": "testuser", "password": "" }
 
+### User login with JWT token - SUCCESS
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{ "username": "testuser", "password": "password" }
+
+### User login with JWT - Another user
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{ "username": "alice", "password": "password123" }
+
 ###

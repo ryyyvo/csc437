@@ -1,5 +1,27 @@
 import express, { Request, Response } from "express";
+import jwt from "jsonwebtoken";
 import { CredentialsProvider } from "../CredentialsProvider";
+
+interface IAuthTokenPayload {
+    username: string;
+}
+
+function generateAuthToken(username: string, jwtSecret: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+        const payload: IAuthTokenPayload = {
+            username
+        };
+        jwt.sign(
+            payload,
+            jwtSecret,
+            { expiresIn: "1d" },
+            (error, token) => {
+                if (error) reject(error);
+                else resolve(token as string);
+            }
+        );
+    });
+}
 
 export function registerAuthRoutes(app: express.Application, credentialsProvider: CredentialsProvider) {
     app.post("/auth/register", async (req: Request, res: Response): Promise<any> => {
@@ -47,16 +69,9 @@ export function registerAuthRoutes(app: express.Application, credentialsProvider
             const isValid = await credentialsProvider.verifyPassword(username, password);
             
             if (isValid) {
-                const expirationDate = new Date();
-                expirationDate.setHours(expirationDate.getHours() + 24);
+                const token = await generateAuthToken(username, req.app.locals.JWT_SECRET);
                 
-                const token = {
-                    username: username,
-                    expirationDate: expirationDate.toISOString(),
-                    signature: "TODO_makeDigitalSignature" // TODO: Implement digital signature
-                };
-                
-                res.status(200).send(token);
+                res.status(200).send({ token });
             } else {
                 res.status(401).send({
                     error: "Unauthorized",

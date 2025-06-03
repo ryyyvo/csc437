@@ -11,6 +11,12 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 const STATIC_DIR = process.env.STATIC_DIR || "public";
 
+// Safely read JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+    throw new Error("Missing JWT_SECRET from environment variables");
+}
+
 const mongoClient = connectMongo();
 let imageProvider = new ImageProvider(mongoClient);
 let credentialsProvider = new CredentialsProvider(mongoClient);
@@ -32,6 +38,9 @@ async function initializeMongo() {
 }
 
 const app = express();
+
+// Store JWT_SECRET in app.locals for access in route handlers
+app.locals.JWT_SECRET = JWT_SECRET;
 
 initializeMongo();
 
