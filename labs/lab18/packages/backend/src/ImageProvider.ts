@@ -73,6 +73,12 @@ export class ImageProvider {
         });
     }
 
+    async getImageAuthor(imageId: string): Promise<string | null> {
+        const objectId = new ObjectId(imageId);
+        const image = await this.imageCollection.findOne({ _id: objectId });
+        return image ? image.authorId : null;
+    }
+
     async updateImageName(imageId: string, newName: string): Promise<number> {
         const objectId = new ObjectId(imageId);
 
