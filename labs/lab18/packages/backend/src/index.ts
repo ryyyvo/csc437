@@ -44,8 +44,10 @@ app.locals.JWT_SECRET = JWT_SECRET;
 initializeMongo();
 
 app.use(express.static(STATIC_DIR));
+app.use("/uploads", express.static(process.env.IMAGE_UPLOAD_DIR || "uploads"));
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
 
 app.get("/api/hello", (req: Request, res: Response) => {
     res.send("Hello, World");

@@ -1,12 +1,66 @@
 import express, { Request, Response } from "express";
 import { ImageProvider } from "../ImageProvider";
 import { ObjectId } from "mongodb";
+import { imageMiddlewareFactory, handleImageFileErrors } from "../middleware/imageUploadMiddleware";
 
 function waitDuration(numMs: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, numMs));
 }
 
 export function registerImageRoutes(app: express.Application, imageProvider: ImageProvider) {
+    app.post(
+        "/api/images",
+        imageMiddlewareFactory.single("image"),
+        handleImageFileErrors,
+        async (req: Request, res: Response): Promise<any> => {
+
+            if (!req.file) {
+                return res.status(400).send({
+                    error: "Bad Request",
+                    message: "No image file provided"
+                });
+            }
+
+            const { name } = req.body;
+            if (!name || name.trim() === "") {
+                return res.status(400).send({
+                    error: "Bad Request", 
+                    message: "Image name is required"
+                });
+            }
+
+            if (!req.user) {
+                return res.status(401).send({
+                    error: "Unauthorized",
+                    message: "Authentication required"
+                });
+            }
+
+            try {
+                const imageData = {
+                    authorId: req.user.username,
+                    name: name.trim(),
+                    src: `/uploads/${req.file.filename}`
+                };
+
+                const result = await imageProvider.createImage(imageData);
+                
+                res.status(201).send({
+                    success: true,
+                    message: "Image uploaded successfully",
+                    imageId: result.insertedId.toString()
+                });
+
+            } catch (error) {
+                console.error("Error creating image metadata:", error);
+                res.status(500).send({
+                    error: "Internal Server Error",
+                    message: "Failed to save image metadata"
+                });
+            }
+        }
+    );
+
     app.get("/api/images", async (req: Request, res: Response) => {
         await waitDuration(1000);
         try {

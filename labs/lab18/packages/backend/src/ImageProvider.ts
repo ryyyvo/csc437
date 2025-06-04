@@ -36,39 +36,20 @@ export class ImageProvider {
 
     async getAllImages(searchQuery?: string): Promise<IApiImageData[]> {
         const filter = searchQuery 
-            ? { name: { $regex: searchQuery, $options: 'i' } } // 'i' for case-insensitive
+            ? { name: { $regex: searchQuery, $options: 'i' } }
             : {};
             
-        // get images from the database with optional filter
         const images = await this.imageCollection.find(filter).toArray();
         
-        // get unique authorId's from the images
-        const authorIds = [...new Set(images.map(image => image.authorId))];
-        
-        // fetch all users that match author IDs
-        const users = await this.userCollection.find({ _id: { $in: authorIds } }).toArray();
-        
-        // create map for user lookup by ID
-        const userMap = new Map<string, IApiUserData>();
-        users.forEach(user => {
-            userMap.set(user._id, {
-                id: user._id,
-                username: user.username
-            });
-        });
-        
-        // transform image documents to match IApiImageData
         return images.map(image => {
-            const author = userMap.get(image.authorId) || {
-                id: image.authorId,
-                username: "Unknown User"
-            };
-        
             return {
                 id: image._id.toString(),
                 name: image.name,
                 src: image.src,
-                author: author
+                author: {
+                    id: image.authorId,
+                    username: image.authorId
+                }
             };
         });
     }
@@ -88,5 +69,16 @@ export class ImageProvider {
         );
 
         return result.matchedCount;
+    }
+
+    async createImage(imageData: { authorId: string; name: string; src: string }) {
+        const result = await this.imageCollection.insertOne({
+            _id: new ObjectId(),
+            authorId: imageData.authorId,
+            name: imageData.name,
+            src: imageData.src
+        });
+        
+        return result;
     }
 }
