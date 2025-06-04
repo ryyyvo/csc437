@@ -84,7 +84,11 @@ function App() {
 
     function handleAuthSuccess(token: string) {
         setAuthToken(token);
-        fetchImages(); // Refetch images when auth token is set
+        fetchImages();
+    }
+
+    function handleLogout() {
+        setAuthToken(null);
     }
 
     useEffect(() => {
@@ -105,7 +109,12 @@ function App() {
         <Routes>
             <Route path={ValidRoutes.HOME} element={
                 <ProtectedRoute authToken={authToken || ""}>
-                    <MainLayout imageData={imageData} updateImageName={updateImageName} authToken={authToken || undefined} />
+                    <MainLayout 
+                        imageData={imageData} 
+                        updateImageName={updateImageName} 
+                        authToken={authToken || undefined} 
+                        onLogout={handleLogout}
+                    />
                 </ProtectedRoute>
             }>
                 <Route index element={<AllImages imageData={imageData} isLoading={isLoading} hasError={hasError} searchPanel={searchPanel} />} />
