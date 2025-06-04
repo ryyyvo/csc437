@@ -16,22 +16,15 @@ interface IUserDocument {
 
 export class ImageProvider {
     private imageCollection: Collection<IImageDocument>;
-    private userCollection: Collection<IUserDocument>;
 
     constructor(private readonly mongoClient: MongoClient) {
         const imageCollectionName = process.env.IMAGES_COLLECTION_NAME;
-        const userCollectionName = process.env.USERS_COLLECTION_NAME;
         
         if (!imageCollectionName) {
             throw new Error("Missing IMAGES_COLLECTION_NAME from environment variables");
         }
         
-        if (!userCollectionName) {
-            throw new Error("Missing USERS_COLLECTION_NAME from environment variables");
-        }
-        
         this.imageCollection = this.mongoClient.db().collection(imageCollectionName);
-        this.userCollection = this.mongoClient.db().collection(userCollectionName);
     }
 
     async getAllImages(searchQuery?: string): Promise<IApiImageData[]> {
