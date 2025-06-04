@@ -44,7 +44,8 @@ export function registerAuthRoutes(app: express.Application, credentialsProvider
                 });
             }
             
-            res.status(201).send();
+            const token = await generateAuthToken(username, req.app.locals.JWT_SECRET);
+            res.status(201).send({ token });
             
         } catch (error) {
             console.error("Error during user registration:", error);

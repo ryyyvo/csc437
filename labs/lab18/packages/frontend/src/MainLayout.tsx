@@ -5,13 +5,14 @@ import type { IApiImageData } from "../../backend/src/shared/ApiImageData.ts";
 interface IMainLayoutProps {
     imageData: IApiImageData[];
     updateImageName: (imageId: string, newName: string) => void;
+    authToken?: string;
 }
-export function MainLayout({ imageData, updateImageName }: IMainLayoutProps) {
+export function MainLayout({ imageData, updateImageName, authToken }: IMainLayoutProps) {
     return (
         <div>
             <Header />
             <div className="MainLayout" style={{padding: "0 2em"}}>
-                <Outlet context={{ imageData, updateImageName }} />
+                <Outlet context={{ imageData, updateImageName, authToken }} />
             </div>
         </div>
     );

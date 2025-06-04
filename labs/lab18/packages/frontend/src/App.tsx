@@ -6,6 +6,7 @@ import { ImageDetails } from "./images/ImageDetails.tsx";
 import { UploadPage } from "./UploadPage.tsx";
 import { LoginPage } from "./LoginPage.tsx";
 import { MainLayout } from "./MainLayout.tsx";
+import { ProtectedRoute } from "./ProtectedRoute.tsx";
 import { ValidRoutes } from "../../backend/src/shared/ValidRoutes.ts";
 import { ImageSearchForm } from "./images/ImageSearchForm.tsx";
 
@@ -19,6 +20,7 @@ function App() {
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
     const [searchString, setSearchString] = useState("");
+    const [authToken, setAuthToken] = useState<string | null>(null);
     const requestNumberRef = useRef(0);
 
     function updateImageName(imageId: string, newName: string) {
@@ -44,8 +46,15 @@ function App() {
             const url = searchQuery && searchQuery.trim() !== "" 
                 ? `/api/images/search?q=${encodeURIComponent(searchQuery)}`
                 : "/api/images";
+
+            const headers: HeadersInit = {};
+            if (authToken) {
+                headers["Authorization"] = `Bearer ${authToken}`;
+            }
                 
-            const response = await fetch(url);
+            const response = await fetch(url, {
+                headers
+            });
             
             if (!response.ok) {
                 throw new Error("Network response was not ok");
@@ -73,9 +82,16 @@ function App() {
         fetchImages(searchString);
     }
 
+    function handleAuthSuccess(token: string) {
+        setAuthToken(token);
+        fetchImages(); // Refetch images when auth token is set
+    }
+
     useEffect(() => {
-        fetchImages();
-    }, []);
+        if (authToken) {
+            fetchImages();
+        }
+    }, [authToken]);
 
     const searchPanel = (
         <ImageSearchForm
@@ -87,12 +103,17 @@ function App() {
 
     return (
         <Routes>
-            <Route path={ValidRoutes.HOME} element={<MainLayout imageData={imageData} updateImageName={updateImageName} />}>
+            <Route path={ValidRoutes.HOME} element={
+                <ProtectedRoute authToken={authToken || ""}>
+                    <MainLayout imageData={imageData} updateImageName={updateImageName} authToken={authToken || undefined} />
+                </ProtectedRoute>
+            }>
                 <Route index element={<AllImages imageData={imageData} isLoading={isLoading} hasError={hasError} searchPanel={searchPanel} />} />
                 <Route path={`${ValidRoutes.IMAGES}/:id`} element={<ImageDetailsWrapper />} />
                 <Route path={ValidRoutes.UPLOAD} element={<UploadPage />} />
-                <Route path={ValidRoutes.LOGIN} element={<LoginPage />} />
             </Route>
+            <Route path={ValidRoutes.LOGIN} element={<LoginPage onAuthSuccess={handleAuthSuccess} />} />
+            <Route path={ValidRoutes.REGISTER} element={<LoginPage isRegistering={true} onAuthSuccess={handleAuthSuccess} />} />
         </Routes>
     );
 }

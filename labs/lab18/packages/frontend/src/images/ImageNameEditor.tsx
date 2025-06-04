@@ -4,6 +4,7 @@ interface INameEditorProps {
     initialValue: string;
     imageId: string;
     onNameUpdate: (imageId: string, newName: string) => void;
+    authToken?: string;
 }
 
 export function ImageNameEditor(props: INameEditorProps) {
@@ -17,11 +18,23 @@ export function ImageNameEditor(props: INameEditorProps) {
         setError(null);
         
         try {
-            const response = await fetch("/api/images");
+            const headers: HeadersInit = {
+                "Content-Type": "application/json"
+            };
+            
+            if (props.authToken) {
+                headers["Authorization"] = `Bearer ${props.authToken}`;
+            }
+
+            const response = await fetch(`/api/images/${props.imageId}`, {
+                method: "PUT",
+                headers,
+                body: JSON.stringify({ name: input })
+            });
+            
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             }
-            await response.json();
 
             props.onNameUpdate(props.imageId, input);
             
